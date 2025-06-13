@@ -1,5 +1,7 @@
 #include <string>   // For std::string
 #include <memory>
+#include <vector>
+
 // base class
 class ExprAST {
     public:
@@ -25,3 +27,22 @@ class BinaryExprAST : public ExprAST {
 public:
     BinaryExprAST(char op,std::unique_ptr<ExprAST> LHS,std::unique_ptr<ExprAST> RHS): op(op),LHS(std::move(LHS)),RHS(std::move(RHS)) {}
 };
+//func prototype ast
+class PrototypeAst {
+    std::string Name;
+    std::vector<std::string> args;
+    public:
+        PrototypeAst(const std::string &Name,std::vector<std::string> args): Name(Name),args(std::move(args)) {}
+        const std::string &getName() const { return Name;}
+};
+
+// no type as by default the type retuned is a double
+class FunctionAST {
+    std::unique_ptr<PrototypeAst> proto;
+    std::unique_ptr<ExprAST> body;
+    public:
+        FunctionAST(std::unique_ptr<PrototypeAst> proto,std::unique_ptr<ExprAST> body):
+            proto(std::move(proto)),body(std::move(body)) {}
+
+};
+
