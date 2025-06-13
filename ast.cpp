@@ -43,6 +43,16 @@ class FunctionAST {
     public:
         FunctionAST(std::unique_ptr<PrototypeAst> proto,std::unique_ptr<ExprAST> body):
             proto(std::move(proto)),body(std::move(body)) {}
+};
 
+/// CallExprAST - Expression class for function calls.
+class CallExprAST : public ExprAST {
+  std::string Callee;
+  std::vector<std::unique_ptr<ExprAST>> Args;
+
+public:
+  CallExprAST(const std::string &Callee,
+              std::vector<std::unique_ptr<ExprAST>> Args)
+      : Callee(Callee), Args(std::move(Args)) {}
 };
 
